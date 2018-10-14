@@ -25,13 +25,12 @@ public class LegMoving implements Runnable {
                 }
 
             }
-
         }
-
     }
 
     public void stop() {
         isRunning = false;
+        Thread.currentThread().interrupt();
     }
 
 }
