@@ -15,7 +15,7 @@ public class StepHandler extends Handler {
     @NonNull
     private final WeakReference<TextView> tvRef;
 
-    StepHandler(TextView textView) {
+    StepHandler(@NonNull TextView textView) {
         tvRef = new WeakReference<>(textView);
     }
 
@@ -23,7 +23,7 @@ public class StepHandler extends Handler {
     public void handleMessage(@NonNull Message msg) {
 
         if (msg.what == MSG_KEY) {
-            TextView tv = tvRef.get();
+            final TextView tv = tvRef.get();
             tv.setText((String) msg.obj);
         }
     }
