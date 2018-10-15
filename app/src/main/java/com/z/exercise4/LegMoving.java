@@ -1,36 +1,43 @@
 package com.z.exercise4;
 
+import android.support.annotation.NonNull;
+
 public class LegMoving implements Runnable {
 
+    @NonNull
     private final Step step;
+    @NonNull
+    private final StepHandler handler;
     private boolean isRunning = true;
 
-    public LegMoving(Step step) {
+    public LegMoving(@NonNull Step step, @NonNull StepHandler handler) {
         this.step = step;
+        this.handler = handler;
     }
 
     @Override
     public void run() {
-        while (isRunning) {
-
-            synchronized (step) {
+        synchronized (step) {
+            while (isRunning) {
                 try {
-                    step.wait(100);
+                    step.wait(1000);
                     step.changeLeg();
-                    System.out.println(step.getCurrentLeg() + " step");
+                    final String stepMessage = step.getCurrentLeg() + " step, total steps: " + step.getStepCount();
+                    System.out.println(stepMessage);
+                    handler.sendStepMessage(stepMessage);
                     step.notify();
                     step.wait();
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     e.printStackTrace();
                 }
-
             }
+            step.notify();
         }
     }
 
     public void stop() {
         isRunning = false;
-        Thread.currentThread().interrupt();
     }
 
 }

@@ -2,6 +2,7 @@ package com.z.exercise4;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class DemoThreadActivity extends AppCompatActivity {
 
@@ -12,11 +13,13 @@ public class DemoThreadActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        final Step step = new Step();
+        final TextView stepInfoView = findViewById(R.id.thread_tv_step_info);
+        final StepHandler mHandler = new StepHandler(stepInfoView);
 
-        leftLeg = new LegMoving(step);
+        final Step step = new Step();
+        leftLeg = new LegMoving(step, mHandler);
         new Thread(leftLeg).start();
-        rightLeg = new LegMoving(step);
+        rightLeg = new LegMoving(step, mHandler);
         new Thread(rightLeg).start();
     }
 
@@ -31,13 +34,7 @@ public class DemoThreadActivity extends AppCompatActivity {
         super.onStop();
         leftLeg.stop();
         rightLeg.stop();
-
     }
-
-
-
-
-
 
 
 }
