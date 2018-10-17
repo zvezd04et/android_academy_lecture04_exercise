@@ -1,5 +1,6 @@
 package com.z.exercise4;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
+@SuppressLint("HandlerLeak")
 public class StepHandler extends Handler {
 
     private static final int MSG_KEY = 1;
